@@ -28,6 +28,9 @@
       Book Id: {{bookId}}<br />
       {{ outlet }}
     </script>
+    <script type="text/x-handlebars" data-template-name="loading">
+      Loading...</br>
+    </script>
 
     <script type="text/x-handlebars" data-template-name="chapter">
       controller: {{name}}<br />
@@ -59,7 +62,11 @@
 
     App.BookRoute = Ember.Route.extend({
       model: function(params){
-        return params
+        return new Ember.RSVP.Promise(function(resolve){
+            setTimeout(function(){
+              resolve(params);
+            }, 1000);
+        });
       }
     })
     </script>

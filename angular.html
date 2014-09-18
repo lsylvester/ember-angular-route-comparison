@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- Taken from https://docs.angularjs.org/api/ngRoute/service/$route -->
 <html ng-app="ngRouteExample">
   <head>
     <title>My Angular App</title>
@@ -59,7 +60,15 @@
       $routeProvider
        .when('/Book/:bookId', {
         templateUrl: 'book.html',
-        controller: 'BookController'
+        controller: 'BookController',
+        resolve: {
+          // I will cause a 1 second delay
+          delay: function($q, $timeout) {
+            var delay = $q.defer();
+            $timeout(delay.resolve, 1000);
+            return delay.promise;
+          }
+        }
       })
       .when('/Book/:bookId/ch/:chapterId', {
         templateUrl: 'chapter.html',
