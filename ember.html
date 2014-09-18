@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>My ember App</title>
-    <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-1.0.0.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://builds.emberjs.com/release/ember.prod.js"></script>
     <style type='text/css'>
@@ -18,7 +18,7 @@
         {{#link-to 'book' 'Moby' }}Moby{{/link-to}} |
         {{#link-to 'chapter' 'Moby' '1' }}Moby: Ch1{{/link-to}} |
         {{#link-to 'book' 'Gatsby' }}Gatsby{{/link-to}} |
-        {{#link-to 'chapter' 'Gatsby' '4' }}Gatsby: Ch4{{/link-to}} |
+        {{#link-to 'chapter' 'Gatsby' '4' (query-params key="value") }}Gatsby: Ch4{{/link-to}} |
         {{#link-to 'book' 'Scarlet' }}Scarlet Letter{{/link-to}}<br/>
         {{ outlet }}
       </div>
@@ -31,10 +31,15 @@
     <script type="text/x-handlebars" data-template-name="loading">
       Loading...</br>
     </script>
+    <script type="text/x-handlebars" data-template-name="book/index">
+      controller: {{name}}<br />
+      No chapter selected
+    </script>
 
     <script type="text/x-handlebars" data-template-name="chapter">
       controller: {{name}}<br />
-      Chapter Id: {{chapterId}}
+      Chapter Id: {{chapterId}}<br />
+      Key:        {{ input value=key}}
     </script>
 
     <script type='text/javascript'>
@@ -47,11 +52,17 @@
     })
 
     App.ChapterController = Ember.ObjectController.extend({
+      queryParams: ['key'],
+      key: null,
       name: "ChapterController"
     })
 
     App.BookController = Ember.ObjectController.extend({
       name: "BookController"
+    })
+
+    App.BookIndexController = Ember.ObjectController.extend({
+      name: "BookIndexController"
     })
 
     App.ChapterRoute = Ember.Route.extend({
