@@ -25,7 +25,7 @@
     </script>
     <script type="text/x-handlebars" data-template-name="book">
       controller: {{name}}<br />
-      Params: {{model}}<br />
+      Book Id: {{bookId}}<br />
       {{ outlet }}
     </script>
     <script type="text/x-handlebars" data-template-name="loading">
@@ -38,7 +38,7 @@
 
     <script type="text/x-handlebars" data-template-name="chapter">
       controller: {{name}}<br />
-      Params: {{model}}<br />
+      Chapter Id: {{chapterId}}<br />
       Key:        {{ input value=key}}
     </script>
 
@@ -67,7 +67,7 @@
 
     App.ChapterRoute = Ember.Route.extend({
       model: function(params){
-        return JSON.stringify(params)
+        return params
       }
     })
 
@@ -75,7 +75,7 @@
       model: function(params){
         return new Ember.RSVP.Promise(function(resolve){
             setTimeout(function(){
-              resolve(JSON.stringify(params));
+              resolve(params);
             }, 1000);
         });
       }
