@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>My ember App</title>
+    <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-1.0.0.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://builds.emberjs.com/release/ember.prod.js"></script>
+    <style type='text/css'>
+    .active{
+      font-weight: bold;
+    }
+    </style>
+  </head>
+  <body>
+    <script type="text/x-handlebars">
+      <div>
+        Choose:
+        {{#link-to 'book' 'Moby' }}Moby{{/link-to}} |
+        {{#link-to 'chapter' 'Moby' '1' }}Moby: Ch1{{/link-to}} |
+        {{#link-to 'book' 'Gatsby' }}Gatsby{{/link-to}} |
+        {{#link-to 'chapter' 'Gatsby' '4' }}Gatsby: Ch4{{/link-to}} |
+        {{#link-to 'book' 'Scarlet' }}Scarlet Letter{{/link-to}}<br/>
+        {{ outlet }}
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="book">
+      controller: {{name}}<br />
+      Book Id: {{bookId}}<br />
+      {{ outlet }}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="chapter">
+      controller: {{name}}<br />
+      Chapter Id: {{chapterId}}
+    </script>
+
+    <script type='text/javascript'>
+    App = Ember.Application.create();
+
+    App.Router.map(function(){
+      this.resource('book', {path: '/Book/:bookId'}, function(){
+        this.resource('chapter',{path: '/ch/:chapterId'})
+      })
+    })
+
+    App.ChapterController = Ember.ObjectController.extend({
+      name: "ChapterController"
+    })
+
+    App.BookController = Ember.ObjectController.extend({
+      name: "BookController"
+    })
+
+    App.ChapterRoute = Ember.Route.extend({
+      model: function(params){
+        return params
+      }
+    })
+
+    App.BookRoute = Ember.Route.extend({
+      model: function(params){
+        return params
+      }
+    })
+    </script>
+  </body>
+</html>
