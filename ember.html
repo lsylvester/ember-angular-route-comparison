@@ -20,6 +20,7 @@
         {{#link-to 'book' 'Gatsby' }}Gatsby{{/link-to}} |
         {{#link-to 'chapter' 'Gatsby' '4' (query-params key="value") }}Gatsby: Ch4{{/link-to}} |
         {{#link-to 'book' 'Scarlet' }}Scarlet Letter{{/link-to}}<br/>
+
         {{ outlet }}
       </div>
     </script>
@@ -39,7 +40,12 @@
     <script type="text/x-handlebars" data-template-name="chapter">
       controller: {{name}}<br />
       Chapter Id: {{chapterId}}<br />
-      Key:        {{ input value=key}}
+      {{#link-to (query-params key="Hello")}}Hello{{/link-to}}<br/>
+      {{#link-to (query-params key="Goodbye")}}Goodbye{{/link-to}}<br/>
+      {{#link-to (query-params key="")}}Clear{{/link-to}}<br/>
+      {{#if key}}
+        <h1>Query: {{key}}</h1>
+      {{/if}}
     </script>
 
     <script type='text/javascript'>
@@ -53,7 +59,7 @@
 
     App.ChapterController = Ember.ObjectController.extend({
       queryParams: ['key'],
-      key: null,
+      key: "",
       name: "ChapterController"
     })
 
